@@ -11,7 +11,7 @@ import java.util.function.DoubleSupplier;
  */
 public final class LazyDouble {
     private final DoubleSupplier intSupplier;
-    private volatile OptionalDouble value;
+    private volatile OptionalDouble value = OptionalDouble.empty();
 
     private LazyDouble(DoubleSupplier intSupplier) {
         this.intSupplier = intSupplier;

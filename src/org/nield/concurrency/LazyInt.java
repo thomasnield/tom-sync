@@ -10,7 +10,7 @@ import java.util.function.IntSupplier;
  */
 public final class LazyInt {
     private final IntSupplier intSupplier;
-    private volatile OptionalInt value;
+    private volatile OptionalInt value = OptionalInt.empty();
 
     private LazyInt(IntSupplier intSupplier) {
         this.intSupplier = intSupplier;
