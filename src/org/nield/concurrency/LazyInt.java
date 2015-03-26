@@ -15,6 +15,11 @@ public final class LazyInt {
     private LazyInt(IntSupplier intSupplier) {
         this.intSupplier = intSupplier;
     }
+
+    public static LazyInt forSupplier(IntSupplier intSupplier) {
+        return new LazyInt(intSupplier);
+    }
+
     public int getAsInt() {
         if (! value.isPresent()) {
             synchronized(this) {

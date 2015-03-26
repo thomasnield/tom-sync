@@ -16,6 +16,11 @@ public final class LazyDouble {
     private LazyDouble(DoubleSupplier intSupplier) {
         this.intSupplier = intSupplier;
     }
+
+    public static LazyDouble forSupplier(DoubleSupplier doubleSupplier) {
+        return new LazyDouble(doubleSupplier);
+    }
+
     public double getAsDouble() {
         if (! value.isPresent()) {
             synchronized(this) {

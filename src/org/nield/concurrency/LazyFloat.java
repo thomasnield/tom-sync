@@ -13,6 +13,11 @@ public final class LazyFloat {
     private LazyFloat(FloatSupplier floatSupplier) {
         this.floatSupplier = floatSupplier;
     }
+
+    public static LazyFloat forSupplier(FloatSupplier floatSupplier) {
+        return new LazyFloat(floatSupplier);
+    }
+
     public float getAsFloat() {
         if (! updated) {
             synchronized(this) {

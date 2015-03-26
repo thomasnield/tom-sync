@@ -15,6 +15,11 @@ public final class LazyBoolean {
     private LazyBoolean(BooleanSupplier booleanSupplier) {
         this.boolSupplier = booleanSupplier;
     }
+
+    public static LazyBoolean forSupplier(BooleanSupplier booleanSupplier) {
+        return new LazyBoolean(booleanSupplier);
+    }
+
     public boolean getAsBoolean() {
         if (! updated) {
             synchronized(this) {

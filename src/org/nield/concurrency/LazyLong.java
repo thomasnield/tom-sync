@@ -16,6 +16,11 @@ public final class LazyLong {
     private LazyLong(LongSupplier longSupplier) {
         this.longSupplier = longSupplier;
     }
+
+    public static LazyLong forSupplier(LongSupplier longSupplier) {
+        return new LazyLong(longSupplier);
+    }
+
     public long getAsInt() {
         if (! value.isPresent()) {
             synchronized(this) {
