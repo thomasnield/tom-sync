@@ -1,10 +1,6 @@
 package org.nield.concurrency;
 
-import com.sun.javafx.scene.control.behavior.OptionalBoolean;
-
-import java.util.OptionalInt;
 import java.util.function.BooleanSupplier;
-import java.util.function.IntSupplier;
 
 /**<html>A simple but powerful concurrency utility that simplifies lazy initialization. <br><br>Client simply provides a
  * supplier for the lazy-initialized <b>int</b> value to the static factory method <b><i>forSupplier()</i></b><br><br>
@@ -19,7 +15,7 @@ public final class LazyBoolean {
     private LazyBoolean(BooleanSupplier booleanSupplier) {
         this.boolSupplier = booleanSupplier;
     }
-    public int getAsBoolean() {
+    public boolean getAsBoolean() {
         if (! updated) {
             synchronized(this) {
                 if (! updated) {
