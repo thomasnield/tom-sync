@@ -10,11 +10,11 @@ import java.util.function.DoubleSupplier;
  * </html>
  */
 public final class LazyDouble {
-    private final DoubleSupplier intSupplier;
+    private final DoubleSupplier doubleSupplier;
     private volatile OptionalDouble value = OptionalDouble.empty();
 
-    private LazyDouble(DoubleSupplier intSupplier) {
-        this.intSupplier = intSupplier;
+    private LazyDouble(DoubleSupplier doubleSupplier) {
+        this.doubleSupplier = doubleSupplier;
     }
 
     public static LazyDouble forSupplier(DoubleSupplier doubleSupplier) {
@@ -25,7 +25,7 @@ public final class LazyDouble {
         if (! value.isPresent()) {
             synchronized(this) {
                 if (! value.isPresent()) {
-                    value = OptionalDouble.of(intSupplier.getAsDouble());
+                    value = OptionalDouble.of(doubleSupplier.getAsDouble());
                 }
             }
         }

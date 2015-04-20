@@ -21,7 +21,7 @@ public final class LazyLong {
         return new LazyLong(longSupplier);
     }
 
-    public long getAsInt() {
+    public long getAsLong() {
         if (! value.isPresent()) {
             synchronized(this) {
                 if (! value.isPresent()) {
