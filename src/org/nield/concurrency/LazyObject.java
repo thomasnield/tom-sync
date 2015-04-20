@@ -11,26 +11,28 @@ import java.util.function.Supplier;
 public final class LazyObject<T> {
 
     private volatile T value;
+    private volatile boolean updated;
     private final Supplier<T> supplier;
 
     private LazyObject(Supplier<T> supplier) {
         this.supplier = supplier;
     }
     public T get() {
-        if (value == null) {
+        if (!updated) {
             synchronized(this) {
-                if (value == null) {
+                if (!updated) {
                     value = supplier.get();
+                    updated = true;
                 }
             }
         }
         return value;
     }
     public void reset() {
-        if (value != null) {
+        if (updated) {
             synchronized(this) {
-                if (value != null) {
-                    this.value = null;
+                if (updated) {
+                    updated = false;
                 }
             }
         }

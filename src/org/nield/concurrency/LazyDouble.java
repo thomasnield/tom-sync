@@ -1,7 +1,6 @@
 package org.nield.concurrency;
 
 
-import java.util.OptionalDouble;
 import java.util.function.DoubleSupplier;
 
 /**<html>A simple but powerful concurrency utility that simplifies lazy initialization. <br><br>Client simply provides a
@@ -11,7 +10,8 @@ import java.util.function.DoubleSupplier;
  */
 public final class LazyDouble {
     private final DoubleSupplier doubleSupplier;
-    private volatile OptionalDouble value = OptionalDouble.empty();
+    private volatile boolean updated;
+    private volatile double value;
 
     private LazyDouble(DoubleSupplier doubleSupplier) {
         this.doubleSupplier = doubleSupplier;
@@ -22,20 +22,21 @@ public final class LazyDouble {
     }
 
     public double getAsDouble() {
-        if (! value.isPresent()) {
+        if (! updated) {
             synchronized(this) {
-                if (! value.isPresent()) {
-                    value = OptionalDouble.of(doubleSupplier.getAsDouble());
+                if (! updated) {
+                    value = doubleSupplier.getAsDouble();
+                    updated = true;
                 }
             }
         }
-        return value.getAsDouble();
+        return value;
     }
     public void reset() {
-        if (!value.isPresent()) {
+        if (updated) {
             synchronized(this) {
-                if (!value.isPresent()) {
-                    this.value = OptionalDouble.empty();
+                if (updated) {
+                    updated = false;
                 }
             }
         }

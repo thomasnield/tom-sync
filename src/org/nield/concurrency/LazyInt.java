@@ -1,6 +1,5 @@
 package org.nield.concurrency;
 
-import java.util.OptionalInt;
 import java.util.function.IntSupplier;
 
 /**<html>A simple but powerful concurrency utility that simplifies lazy initialization. <br><br>Client simply provides a
@@ -10,7 +9,8 @@ import java.util.function.IntSupplier;
  */
 public final class LazyInt {
     private final IntSupplier intSupplier;
-    private volatile OptionalInt value = OptionalInt.empty();
+    private volatile boolean updated;
+    private volatile int value;
 
     private LazyInt(IntSupplier intSupplier) {
         this.intSupplier = intSupplier;
@@ -21,20 +21,21 @@ public final class LazyInt {
     }
 
     public int getAsInt() {
-        if (! value.isPresent()) {
+        if (!updated) {
             synchronized(this) {
-                if (! value.isPresent()) {
-                    value = OptionalInt.of(intSupplier.getAsInt());
+                if (!updated) {
+                    value = intSupplier.getAsInt();
+                    updated = true;
                 }
             }
         }
-        return value.getAsInt();
+        return value;
     }
     public void reset() {
-        if (!value.isPresent()) {
+        if (updated) {
             synchronized(this) {
-                if (!value.isPresent()) {
-                    this.value = OptionalInt.empty();
+                if (updated) {
+                    updated = false;
                 }
             }
         }

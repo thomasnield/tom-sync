@@ -1,7 +1,6 @@
 package org.nield.concurrency;
 
 
-import java.util.OptionalLong;
 import java.util.function.LongSupplier;
 
 /**<html>A simple but powerful concurrency utility that simplifies lazy initialization. <br><br>Client simply provides a
@@ -11,7 +10,8 @@ import java.util.function.LongSupplier;
  */
 public final class LazyLong {
     private final LongSupplier longSupplier;
-    private volatile OptionalLong value = OptionalLong.empty();
+    private volatile boolean updated;
+    private volatile long value;
 
     private LazyLong(LongSupplier longSupplier) {
         this.longSupplier = longSupplier;
@@ -22,20 +22,21 @@ public final class LazyLong {
     }
 
     public long getAsLong() {
-        if (! value.isPresent()) {
+        if (!updated) {
             synchronized(this) {
-                if (! value.isPresent()) {
-                    value = OptionalLong.of(longSupplier.getAsLong());
+                if (updated) {
+                    value = longSupplier.getAsLong();
+                    updated = true;
                 }
             }
         }
-        return value.getAsLong();
+        return value;
     }
     public void reset() {
-        if (!value.isPresent()) {
+        if (updated) {
             synchronized(this) {
-                if (!value.isPresent()) {
-                    this.value = OptionalLong.empty();
+                if (updated) {
+                     updated = false;
                 }
             }
         }
