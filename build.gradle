@@ -1,0 +1,13 @@
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+
+sourceSets {
+	main.java.srcDir "src/main/java"
+	//main.java.srcDir "src/test"
+}
+
+jar { 
+	from configurations.compile.collect { entry -> zipTree(entry) }
+}
