@@ -8,9 +8,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 /**
- * LazyObjectExpirable is an augmentation of LazyObject. The only difference is the value is reset and garbage-collected after a specified period of no use
+ * LazyExpirable is an augmentation of LazyObject. The only difference is the value is reset and garbage-collected after a specified period of no use
  */
-public final class LazyObjectExpirable<T> {
+public final class LazyExpirable<T> {
 	
 	private final LazyObject<T> value; 
 	private final ScheduledThreadPoolExecutor executor;
@@ -18,14 +18,14 @@ public final class LazyObjectExpirable<T> {
 	private final TimeUnit timeUnit;
 	private final AtomicReference<ScheduledFuture<?>> scheduledRemoval = new AtomicReference<>();
 	
-	private LazyObjectExpirable(Supplier<T> supplier, ScheduledThreadPoolExecutor executor, long expirationDelay, TimeUnit timeUnit) { 
+	private LazyExpirable(Supplier<T> supplier, ScheduledThreadPoolExecutor executor, long expirationDelay, TimeUnit timeUnit) { 
 		value = LazyObject.forSupplier(() -> supplier.get());
 		this.expirationDelay = expirationDelay;
 		this.executor = executor;
 		this.timeUnit = timeUnit;
 	}
-	public static <T> LazyObjectExpirable<T> forSupplier(Supplier<T> supplier, ScheduledThreadPoolExecutor executor, long expirationDelay, TimeUnit timeUnit) { 
-		return new LazyObjectExpirable<>(supplier, executor, expirationDelay, timeUnit);
+	public static <T> LazyExpirable<T> forSupplier(Supplier<T> supplier, ScheduledThreadPoolExecutor executor, long expirationDelay, TimeUnit timeUnit) { 
+		return new LazyExpirable<>(supplier, executor, expirationDelay, timeUnit);
 	}
 	public T get() { 
 		
