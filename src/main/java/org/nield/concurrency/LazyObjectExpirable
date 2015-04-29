@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 /**
- * LazyObjectExpirable is an augmentation of LazyObject. The only difference is the value is reset is and garbage-collected after a specified period of no use
+ * LazyObjectExpirable is an augmentation of LazyObject. The only difference is the value is reset and garbage-collected after a specified period of no use
  */
 public final class LazyObjectExpirable<T> {
 	
