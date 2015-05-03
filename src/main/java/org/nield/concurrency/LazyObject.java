@@ -33,6 +33,7 @@ public final class LazyObject<T> {
             synchronized(this) {
                 if (updated) {
                     updated = false;
+                    value = null;
                 }
             }
         }
