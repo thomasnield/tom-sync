@@ -1,3 +1,7 @@
 .gradle/
 build/
 *.iml
+*.class
+*.prefs
+*.classpath
+.project
