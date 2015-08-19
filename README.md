@@ -1,4 +1,4 @@
-Welcome to the tom-sync Java library. These are my concurrency tools I found a need for. I hope you find value in them too.
+Welcome to the tom-sync Java library. These are my concurrency tools and I hope you find value in them too.
 
 You will need Java 8 to use this library as it requires the functional interfaces and Optionals. 
 
