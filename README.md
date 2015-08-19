@@ -2,7 +2,7 @@ Welcome to the tom-sync Java library. These are my concurrency tools and I hope 
 
 You will need Java 8 to use this library as it requires the functional interfaces and Optionals. 
 
-So far there are only two core features... Lazy Initialization wrappers and the BufferedLatch. 
+So far there are only two core features: Lazy Initialization wrappers and the BufferedLatch. 
 
 **BufferedLatch**
 
