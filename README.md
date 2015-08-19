@@ -2,13 +2,13 @@ Welcome to the tom-sync Java library. These are my concurrency tools and I hope 
 
 You will need Java 8 to use this library as it requires the functional interfaces and Optionals. 
 
-So far there are only two core features: Lazy Initialization wrappers and the BufferedLatch. 
+So far there are only two core features: Lazy Initialization wrappers and the `BufferedLatch`. 
 
 **BufferedLatch**
 
-The `BufferedLatch` is a synchronizer much like a `CountDownLatch`, but it is used for situations where the "count" is not known until later. It positively increments two `int` counts, the `leadCount` and the `chaseCount`. The `leadCount` is the leader and incremented by calling `incrementLeadCount()`, and the `chaseCount` chases it by calling `incrementChaseCount()` When both counts are equal and `setLeaderComplete()` is called, anything waiting on the `BufferedLatch` is notified. 
+The `BufferedLatch` is a synchronizer much like a `CountDownLatch`, but it is used for situations where the "count" is not known until later. It positively increments two `int` counts, the `leadCount` and the `chaseCount`. The `leadCount` is the leader and incremented by calling `incrementLeadCount()`, and the `chaseCount` chases it by calling `incrementChaseCount()`. When both counts are equal and `setLeaderComplete()` is called, anything waiting on the `BufferedLatch` is notified. 
 
-A typical use of `BufferedLatch` is to iterate a `ResultSet` or some buffered data set, process each one asynchronously (be careful to extract the data first to prevent race conditions!), and when the iteration is complete wait for all the tasks to finish. 
+A typical use of `BufferedLatch` is to iterate a `ResultSet` or some buffered data set, process each one asynchronously (be careful to extract the data first to prevent race conditions!), and then wait for all tasks to finish.
 
 Think of it as a fork-join on an unknown number of asynchronous tasks.
 
@@ -17,6 +17,7 @@ ResultSet rs = ...;
 ExecutorService service = ...;
 BufferedLatch bufferedLatch = new BufferedLatch();
 
+//iterate a ResultSet, extract a String from each one, and pass it off to the executor as a task to process
 while (rs.next()) { 
     bufferedLatch.incrementLeadCount();
     final String reportCode = rs.getString("REPORT_CODE");
