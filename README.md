@@ -33,7 +33,7 @@ bufferedLatch.await();
 
 **Lazy Initialization**
 
-The Lazy Initialization wrappers streamline the task of deferring the calculation of a value, and doing so in a threadsafe manner.
+The Lazy Initialization wrappers streamline the task of deferring and caching the calculation of a value, and doing so in a threadsafe manner.
 
 `LazyObject<BigDecimal> balance = LazyObject.forSupplier(() -> calculateBalance(financeDate));`
 
