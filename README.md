@@ -37,13 +37,13 @@ The Lazy Initialization wrappers streamline the task of deferring and caching th
 
 `LazyObject<BigDecimal> balance = LazyObject.forSupplier(() -> calculateBalance(financeDate));`
 
-When `balance` has the `get()` method first called, it will calculate and cache the value. After the value is cached, it avoids unnecessary synchronization to improve concurrency. 
+When `balance` has the `get()` method first called, it will calculate and cache the value given the provided `Supplier`. After the value is cached, it avoids unnecessary synchronization to improve concurrency. 
 
 `public BigDecimal getBalance() { 
     return balance.get();
 }`
 
-There are different primitive flavors of `LazyObject` as well. These will store a lazy primitive instead of an object much like how the `Optional` has as `OptionalInt`, `OptionalLong`, and `OptionalDouble` counterparts.
+There are different primitive flavors of `LazyObject` as well. These will store a lazy primitive instead of an object much like the `Optional` has `OptionalInt`, `OptionalLong`, and `OptionalDouble` counterparts.
 
 `LazyInt`
 
