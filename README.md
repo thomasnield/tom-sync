@@ -26,8 +26,8 @@ while (rs.next()) {
         processReport(reportCode);
         bufferedLatch.incrementChaseCount();
     });
-    bufferedLatch.setLeaderComplete();
 }
+bufferedLatch.setLeaderComplete();
 bufferedLatch.await();
 ```
 
